@@ -29,7 +29,10 @@ type Config struct {
 	CookieDomains          []CookieDomain       `long:"cookie-domain" env:"COOKIE_DOMAIN" env-delim:"," description:"Domain to set auth cookie on, can be set multiple times"`
 	InsecureCookie         bool                 `long:"insecure-cookie" env:"INSECURE_COOKIE" description:"Use insecure cookies"`
 	SameSiteCookie         int                  `long:"same-site-cookie" env:"SAMESITE_COOKIE" default:"1" description:"Set cookies SameSite value (Default (1), 2: Lax, 3: Strict, 4: None)"`
-	AllowOrigin            string               `long:"allow-origin" env:"ALLOW_ORIGIN" default:"http://localhost:3000" description:"Add given Origins to the Access-Control-Allow-Origin Header"`
+	AllowOrigin            string               `long:"allow-origin" env:"ALLOW_ORIGIN" default:"" description:"Add given Origins to the Access-Control-Allow-Origin Header"`
+	AllowMethods           string               `long:"allow-methods" env:"ALLOW_METHODS" default:"" description:"Add given Methods to the Access-Control Header"`
+	AllowHeaders           string               `long:"allow-headers" env:"ALLOW_HEADERS" default:"" description:"Add given Headers to the Access-Control Header"`
+	AllowCredentials       string               `long:"allow-credentials" env:"ALLOW_CREDENTIALS" default:"" description:"set the Access-Control-Allow-Credentials Header"`
 	CookieName             string               `long:"cookie-name" env:"COOKIE_NAME" default:"_forward_auth" description:"Cookie Name"`
 	CSRFCookieName         string               `long:"csrf-cookie-name" env:"CSRF_COOKIE_NAME" default:"_forward_auth_csrf" description:"CSRF Cookie Name"`
 	DefaultAction          string               `long:"default-action" env:"DEFAULT_ACTION" default:"auth" choice:"auth" choice:"allow" description:"Default action"`
