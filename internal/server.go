@@ -224,7 +224,8 @@ func (s *Server) authRedirect(logger *logrus.Entry, w http.ResponseWriter, r *ht
 	// Set the CSRF cookie
 	csrf := MakeCSRFCookie(r, nonce)
 	http.SetCookie(w, csrf)
-
+	//add Access-Control-Allow-Origin header to allow cross-origin requests
+	http.Header.Add(w.Header(), "Access-Control-Allow-Origin", config.AllowOrigin)
 	if !config.InsecureCookie && r.Header.Get("X-Forwarded-Proto") != "https" {
 		logger.Warn("You are using \"secure\" cookies for a request that was not " +
 			"received via https. You should either redirect to https or pass the " +
