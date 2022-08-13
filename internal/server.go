@@ -212,6 +212,15 @@ func (s *Server) LogoutHandler() http.HandlerFunc {
 	}
 }
 
+func stringInSlice(a string, list []string) bool {
+	for _, b := range list {
+		if b == a {
+			return true
+		}
+	}
+	return false
+}
+
 func (s *Server) authRedirect(logger *logrus.Entry, w http.ResponseWriter, r *http.Request, p provider.Provider) {
 	// Error indicates no cookie, generate nonce
 	err, nonce := Nonce()
@@ -225,8 +234,10 @@ func (s *Server) authRedirect(logger *logrus.Entry, w http.ResponseWriter, r *ht
 	csrf := MakeCSRFCookie(r, nonce)
 	http.SetCookie(w, csrf)
 	//add Access-Control-Allow-Origin header to allow cross-origin requests
-	if config.AllowOrigin != "" {
-		http.Header.Add(w.Header(), "Access-Control-Allow-Origin", config.AllowOrigin)
+	if len(config.AllowOrigin) > 0 && r.Header.Get("Origin") != "" {
+		if stringInSlice(r.Header.Get("Origin"), config.AllowOrigin) {
+			http.Header.Add(w.Header(), "Access-Control-Allow-Origin", r.Header.Get("Origin"))
+		}
 	}
 	//add Access-Control-Allow-Methods header to allow cross-origin requests
 	if config.AllowMethods != "" {
