@@ -237,6 +237,8 @@ func (s *Server) authRedirect(logger *logrus.Entry, w http.ResponseWriter, r *ht
 	if len(config.AllowOrigin) > 0 && r.Header.Get("Origin") != "" {
 		if stringInSlice(r.Header.Get("Origin"), config.AllowOrigin) {
 			http.Header.Add(w.Header(), "Access-Control-Allow-Origin", r.Header.Get("Origin"))
+		} else {
+			http.Header.Add(w.Header(), "Access-Control-Allow-Origin", "Nö "+r.Header.Get("Origin"))
 		}
 	}
 	//add Access-Control-Allow-Methods header to allow cross-origin requests
