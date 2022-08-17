@@ -57,6 +57,8 @@ func (s *Server) buildRoutes() {
 // forwarded request so it's correctly routed by mux
 func (s *Server) RootHandler(w http.ResponseWriter, r *http.Request) {
 	// Modify request
+	logger := s.logger(r, "Auth", "default", "Authenticating request")
+	logger.Debug("Jens: Modifying request")
 	r.Method = r.Header.Get("X-Forwarded-Method")
 	r.Host = r.Header.Get("X-Forwarded-Host")
 	r.URL, _ = url.Parse(r.Header.Get("X-Forwarded-Uri"))
