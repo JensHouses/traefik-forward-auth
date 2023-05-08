@@ -234,7 +234,7 @@ func (s *Server) authRedirect(logger *logrus.Entry, w http.ResponseWriter, r *ht
 	csrf := MakeCSRFCookie(r, nonce)
 	http.SetCookie(w, csrf)
 	//add Access-Control-Allow-Origin header to allow cross-origin requests
-	http.Header.Add(w.Header(), "len-AllowOrigin", ""+string(len(config.AllowOrigin)))
+	http.Header.Add(w.Header(), "len-AllowOrigin", fmt.Sprint(len(config.AllowOrigin)))
 	if len(config.AllowOrigin) > 0 && r.Header.Get("Origin") != "" {
 		if stringInSlice(r.Header.Get("Origin"), config.AllowOrigin) {
 			http.Header.Add(w.Header(), "Access-Control-Allow-Origin", r.Header.Get("Origin"))
