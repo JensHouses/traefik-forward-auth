@@ -23,6 +23,24 @@ env:
 
 
 jobs:
+  test:
+    name: Test with Go version -
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        go: ['1.12', '1.13', '1.14', '1.17']
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Run Tests
+        run: go test ./...
   build:
 
     runs-on: ubuntu-latest
